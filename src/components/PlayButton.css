@@ -1,0 +1,49 @@
+.play-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 32px;
+    height: 32px;
+    background-color: #FFFFFF;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .play-button:hover {
+    transform: scale(1.1);
+  }
+  
+  .play-button-icon {
+    width: 16px;
+    height: 16px;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .play-button {
+      width: 28px;
+      height: 28px;
+      padding: 6px;
+    }
+  
+    .play-button-icon {
+      width: 14px;
+      height: 14px;
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .play-button {
+      width: 24px;
+      height: 24px;
+      padding: 4px;
+    }
+  
+    .play-button-icon {
+      width: 12px;
+      height: 12px;
+    }
+  }

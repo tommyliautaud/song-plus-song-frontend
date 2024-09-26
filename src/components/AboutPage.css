@@ -1,0 +1,64 @@
+.about-container {
+    padding: 20px;
+    background-color: #191414;
+    min-height: 100vh;
+    color: #FFFFFF;
+  }
+  
+  .about-title {
+    color: #1DB954;
+    margin-bottom: 20px;
+    font-size: 2rem;
+  }
+  
+  .about-section {
+    margin-bottom: 30px;
+  }
+  
+  .about-section-title {
+    color: #FFFFFF;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .about-section-text {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  
+  .about-link {
+    color: #1DB954;
+    text-decoration: none;
+  }
+  
+  .about-link:hover {
+    text-decoration: underline;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .about-title {
+      font-size: 1.8rem;
+    }
+  
+    .about-section-title {
+      font-size: 1.3rem;
+    }
+  
+    .about-section-text {
+      font-size: 0.9rem;
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .about-title {
+      font-size: 1.6rem;
+    }
+  
+    .about-section-title {
+      font-size: 1.2rem;
+    }
+  
+    .about-section-text {
+      font-size: 0.8rem;
+    }
+  }

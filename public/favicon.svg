@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+  <style>
+    @font-face {
+      font-family: 'Circular Std';
+      src: url('https://db.onlinewebfonts.com/t/860c3ec7bbc5da3e97233ccecafe512e.eot');
+      src: url('https://db.onlinewebfonts.com/t/860c3ec7bbc5da3e97233ccecafe512e.eot?#iefix') format('embedded-opentype'),
+           url('https://db.onlinewebfonts.com/t/860c3ec7bbc5da3e97233ccecafe512e.woff2') format('woff2'),
+           url('https://db.onlinewebfonts.com/t/860c3ec7bbc5da3e97233ccecafe512e.woff') format('woff'),
+           url('https://db.onlinewebfonts.com/t/860c3ec7bbc5da3e97233ccecafe512e.ttf') format('truetype'),
+           url('https://db.onlinewebfonts.com/t/860c3ec7bbc5da3e97233ccecafe512e.svg#Circular Std') format('svg');
+    }
+    text {
+      font-family: 'Circular Std', Arial, sans-serif;
+      font-size: 14px;
+      font-weight: bold;
+      fill: #191414;
+      text-anchor: middle;
+      dominant-baseline: middle;
+    }
+  </style>
+  <rect fill="#1DB954" width="16" height="16"/>
+  <text x="8" y="8.5">S</text>
+</svg>
