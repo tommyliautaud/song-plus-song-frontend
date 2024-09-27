@@ -4,6 +4,7 @@ import SearchWidget from './components/SearchWidget';
 import PlayButton from './components/PlayButton';
 import AboutPage from './components/AboutPage';
 import './fonts.css';
+import './App.css'; // Ensure this imports the latest styles
 
 export const colors = {
   spotifyGreen: '#1DB954',
@@ -20,301 +21,92 @@ function App() {
   const [song1, setSong1] = useState(null);
   const [song2, setSong2] = useState(null);
   const [matchedSong, setMatchedSong] = useState(null);
-  const [genreInfo, setGenreInfo] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [spotifyUrl, setSpotifyUrl] = useState('');
-  const [showAboutPage, setShowAboutPage] = useState(false);
+  const [showAbout, setShowAbout] = useState(false);
 
+  // Load songs or perform necessary setup
   useEffect(() => {
-    if (matchedSong && matchedSong.song) {
-      console.log('Matched Song:', matchedSong); // For debugging
-      setSpotifyUrl(matchedSong.song.url || '');
-    }
-  }, [matchedSong]);
+    // Your useEffect logic for fetching or setting up songs goes here
+  }, []);
 
-  const handleSongSelect = (selectedSong, songNumber) => {
-    if (songNumber === 1) {
-      setSong1(selectedSong);
-    } else {
-      setSong2(selectedSong);
-    }
-    setMatchedSong(null);
-    setGenreInfo(null);
+  const handleSong1Select = (song) => {
+    setSong1(song);
   };
 
-  const handleBack = (songNumber) => {
-    if (songNumber === 1) {
-      setSong1(null);
-    } else {
-      setSong2(null);
-    }
-    setMatchedSong(null);
-    setGenreInfo(null);
+  const handleSong2Select = (song) => {
+    setSong2(song);
   };
 
-  const handleMatchSongs = async () => {
-    if (!song1 || !song2) return;
-    
-    setIsLoading(true);
+  const handleGenerateMatch = async () => {
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/match`, {
-        song1Id: song1.id,
-        song2Id: song2.id
+      // Call API or logic to generate matched song
+      const response = await axios.post('/api/match', {
+        song1: song1.id,
+        song2: song2.id,
       });
-      setMatchedSong(response.data);
-      setGenreInfo(response.data.genreInfo);
-      setSpotifyUrl(response.data.song.url || '');
+      setMatchedSong(response.data.matchedSong);
     } catch (error) {
-      console.error('Error matching songs:', error);
-      alert('An error occurred while matching songs. Please try again.');
-    } finally {
-      setIsLoading(false);
+      console.error('Error generating match:', error);
     }
   };
-
-  const handleGenerateNew = async () => {
-    setMatchedSong(null);
-    setGenreInfo(null);
-    setIsLoading(true);
-
-    try {
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/generate-new`, {
-        song1Id: song1.id,
-        song2Id: song2.id,
-      });
-      setMatchedSong(response.data);
-      setGenreInfo(response.data.genreInfo);
-      setSpotifyUrl(response.data.song.url || '');
-    } catch (error) {
-      console.error('Error generating new song:', error);
-      alert('An error occurred while generating a new song. Please try again.');
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const renderSong = (song, title, genre) => {
-    if (!song) return null;
-
-    const imageUrl = song.album?.images?.[1]?.url || song.coverArt || 'placeholder-image-url.jpg';
-
-    return (
-      <div style={{ 
-        textAlign: 'center', 
-        backgroundColor: colors.spotifyBlack, 
-        padding: '15px', 
-        borderRadius: '8px',
-        ...fontStyle,
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        height: '360px',
-        justifyContent: 'space-between',
-      }}>
-        <div style={{ height: '20px', marginBottom: '8px' }}>
-          {genre && (
-            <div style={{ color: colors.spotifyGrey, fontSize: '0.9em' }}>
-              Genre: {genre}
-            </div>
-          )}
-        </div>
-        <h3 style={{ color: colors.spotifyWhite, marginBottom: '8px', fontWeight: 900, fontSize: '0.9em' }}>{title}</h3>
-        <img 
-          src={imageUrl}
-          alt={`${song.name} album cover`}
-          style={{ width: '150px', height: '150px', marginBottom: '12px', borderRadius: '4px' }}
-        />
-        <div style={{ fontWeight: 'bold', color: colors.spotifyWhite, fontSize: '0.9em', marginBottom: '8px' }}>{song.name}</div>
-        <div style={{ fontSize: '0.8em', color: colors.spotifyGrey, marginBottom: '12px' }}>
-          {song.artists.map(artist => artist.name).join(', ')}
-        </div>
-        <div style={{ height: '32px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          {song.preview_url ? (
-            <PlayButton previewUrl={song.preview_url} />
-          ) : (
-            <span style={{ color: colors.spotifyGrey, fontSize: '0.8em' }}>No preview available</span>
-          )}
-        </div>
-      </div>
-    );
-  };
-
-  const buttonStyle = {
-    backgroundColor: colors.spotifyGreen,
-    color: colors.spotifyBlack,
-    border: 'none',
-    padding: '10px 15px',
-    borderRadius: '20px',
-    cursor: 'pointer',
-    fontWeight: 'bold',
-    fontSize: '0.9em',
-    width: '100%',
-    maxWidth: '200px',
-  };
-
-  const symbolStyle = {
-    fontSize: '40px',
-    color: colors.spotifyWhite,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '60px',
-    height: '60px',
-  };
-
-  const columnStyle = {
-    width: '25%',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  };
-
-  const headerStyle = {
-    textAlign: 'center',
-    color: colors.spotifyWhite,
-    fontSize: '1.2em',
-    marginBottom: '15px',
-    width: '100%',
-  };
-
-  const genreInfoStyle = {
-    textAlign: 'center',
-    color: colors.spotifyWhite,
-    fontSize: '1em',
-    marginTop: '30px',
-    padding: '15px',
-    backgroundColor: colors.spotifyBlack,
-    borderRadius: '8px',
-    width: '100%',
-  };
-
-  const spotifyLinkStyle = {
-    color: colors.spotifyGreen,
-    textDecoration: 'none',
-    fontSize: '1em',
-    fontWeight: 'bold',
-    marginTop: '15px',
-    display: 'inline-block',
-    cursor: 'pointer',
-  };
-
-  const handleSpotifyClick = () => {
-    if (spotifyUrl) {
-      window.open(spotifyUrl, '_blank', 'noopener,noreferrer');
-    } else {
-      alert('Spotify link is not available for this song.');
-    }
-  };
-
-  const handleAboutClick = () => {
-    setShowAboutPage(true);
-  };
-
-  const handleBackToMain = () => {
-    setShowAboutPage(false);
-  };
-
-  if (showAboutPage) {
-    return (
-      <div style={{ backgroundColor: colors.spotifyBlack, minHeight: '100vh' }}>
-        <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '20px' }}>
-          <button onClick={handleBackToMain} style={buttonStyle}>
-            Back to Main
-          </button>
-        </div>
-        <AboutPage />
-      </div>
-    );
-  }
 
   return (
-    <div className="App" style={{ padding: '20px', backgroundColor: colors.spotifyBlack, minHeight: '100vh', color: colors.spotifyWhite, ...fontStyle }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
-        <h1 style={{ color: colors.spotifyGreen }}>Song Plus Song</h1>
-        <button onClick={handleAboutClick} style={buttonStyle}>
-          About
+    <div className="app-container" style={fontStyle}>
+      <div className="header">
+        <h1 className="title">Song Plus Song</h1>
+        <button className="about-button" onClick={() => setShowAbout(!showAbout)}>
+          {showAbout ? 'Hide About' : 'About'}
         </button>
       </div>
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', marginBottom: '30px', width: '100%' }}>
-          <div style={columnStyle}>
-            <h2 style={headerStyle}>Song 1</h2>
-            {song1 ? 
-              renderSong(song1, 'Selected Song 1', matchedSong ? genreInfo?.genre1 : null) : 
-              <SearchWidget onSongSelect={(song) => handleSongSelect(song, 1)} songNumber={1} />
-            }
-            {song1 && (
-              <button onClick={() => handleBack(1)} disabled={isLoading} style={{...buttonStyle, marginTop: '10px'}}>
-                Change Song
-              </button>
-            )}
-          </div>
-          {(song1 || song2) && (
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '60px', marginTop: '170px' }}>
-              <div style={symbolStyle}>+</div>
-            </div>
-          )}
-          <div style={columnStyle}>
-            <h2 style={headerStyle}>Song 2</h2>
-            {song2 ? 
-              renderSong(song2, 'Selected Song 2', matchedSong ? genreInfo?.genre2 : null) : 
-              <SearchWidget onSongSelect={(song) => handleSongSelect(song, 2)} songNumber={2} />
-            }
-            {song2 && (
-              <button onClick={() => handleBack(2)} disabled={isLoading} style={{...buttonStyle, marginTop: '10px'}}>
-                Change Song
-              </button>
-            )}
-          </div>
-          {(song1 || song2) && (
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '60px', marginTop: '170px' }}>
-              <div style={symbolStyle}>=</div>
-            </div>
-          )}
-          <div style={columnStyle}>
-            <h2 style={headerStyle}>Matched Song</h2>
-            {matchedSong ? 
-              renderSong(matchedSong.song, 'Matched Song', genreInfo?.matchedGenre) : 
-              <div style={{ textAlign: 'center', color: colors.spotifyGrey, backgroundColor: colors.spotifyBlack, padding: '20px', borderRadius: '8px', height: '360px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                Select two songs to find a match
-              </div>
-            }
-            {matchedSong && (
-              <button onClick={handleGenerateNew} disabled={isLoading} style={{...buttonStyle, marginTop: '10px'}}>
-                {isLoading ? 'Generating...' : 'Generate New Song'}
-              </button>
-            )}
-          </div>
-        </div>
-        {!matchedSong && (
-          <div style={{ textAlign: 'center', marginTop: '20px', color: colors.spotifyWhite, fontSize: '1em' }}>
-            Select two songs to generate a song that is the closest genre to both songs.
+
+      {showAbout && <AboutPage />}
+
+      <SearchWidget onSong1Select={handleSong1Select} onSong2Select={handleSong2Select} />
+
+      <div className="song-section">
+        {song1 && (
+          <div className="song-container">
+            <img
+              src={song1.coverArtUrl} // Use actual song1 cover art URL
+              alt="Song 1 Cover"
+              className="cover-art"
+            />
+            <p>{song1.name}</p>
+            <PlayButton songUrl={song1.previewUrl} />
           </div>
         )}
-        {matchedSong && genreInfo && (
-          <div style={{ textAlign: 'center' }}>
-            <div style={genreInfoStyle}>
-              Most similar genre to {genreInfo.genre1} and {genreInfo.genre2} is {genreInfo.matchedGenre}
-            </div>
-            {spotifyUrl && (
-              <div 
-                onClick={handleSpotifyClick}
-                style={spotifyLinkStyle}
-              >
-                Listen on Spotify
-              </div>
-            )}
+
+        <span className="plus-sign">+</span>
+
+        {song2 && (
+          <div className="song-container">
+            <img
+              src={song2.coverArtUrl} // Use actual song2 cover art URL
+              alt="Song 2 Cover"
+              className="cover-art"
+            />
+            <p>{song2.name}</p>
+            <PlayButton songUrl={song2.previewUrl} />
           </div>
         )}
-        <div style={{ textAlign: 'center', marginTop: '20px' }}>
-          {song1 && song2 && !matchedSong && (
-            <button onClick={handleMatchSongs} disabled={isLoading} style={{...buttonStyle, maxWidth: '250px'}}>
-              {isLoading ? 'Matching...' : 'Generate Song'}
-            </button>
-          )}
-        </div>
+
+        <span className="equal-sign">=</span>
+
+        {matchedSong && (
+          <div className="song-container">
+            <img
+              src={matchedSong.coverArtUrl} // Use actual matched song cover art URL
+              alt="Matched Song Cover"
+              className="cover-art"
+            />
+            <p>{matchedSong.name}</p>
+            <PlayButton songUrl={matchedSong.previewUrl} />
+          </div>
+        )}
       </div>
+
+      <button className="generate-button" onClick={handleGenerateMatch}>
+        Generate New Song
+      </button>
     </div>
   );
 }
