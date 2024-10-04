@@ -28,22 +28,14 @@
   font-size: 0.9em;
 }
 
-/* Adjusting the cover art */
-.cover-art {
-  width: 100%;
-  max-width: 200px; /* Max width for desktops */
-  height: auto;
-  margin: 10px;
-  object-fit: contain; /* Maintain aspect ratio */
-}
-
 .plus-sign,
 .equal-sign {
   margin: 0 20px;
   font-size: 2em;
 }
 
-/* Responsive layout adjustments */
+/* Media queries for responsive layout */
+
 @media (max-width: 768px) {
   .app-container {
     padding: 10px;
@@ -61,16 +53,6 @@
   .about-button {
     margin-top: 10px;
   }
-
-  .plus-sign,
-  .equal-sign {
-    margin: 0 15px;
-    font-size: 1.8em;
-  }
-
-  .cover-art {
-    max-width: 150px; /* Smaller cover art for tablets */
-  }
 }
 
 @media (max-width: 480px) {
@@ -82,9 +64,5 @@
   .equal-sign {
     margin: 0 10px;
     font-size: 1.5em;
-  }
-
-  .cover-art {
-    max-width: 100px; /* Smaller cover art for mobile */
   }
 }
