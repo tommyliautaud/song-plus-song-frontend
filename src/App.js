@@ -246,6 +246,8 @@ function App() {
         minHeight: '100vh',
         color: colors.spotifyWhite,
         ...fontStyle,
+        display: 'flex',
+        flexDirection: 'column',
       }}
     >
       <div
@@ -262,7 +264,14 @@ function App() {
           About
         </button>
       </div>
-      <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'center' }}>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: isMobile ? 'column' : 'row',
+          alignItems: 'flex-start',
+          flex: 1,
+        }}
+      >
         <div
           style={{
             display: 'flex',
@@ -341,20 +350,8 @@ function App() {
             )}
           </div>
         </div>
-        {!matchedSong && (
-          <div
-            style={{
-              textAlign: 'center',
-              marginTop: '20px',
-              color: colors.spotifyWhite,
-              fontSize: '1em',
-            }}
-          >
-            Select two songs to generate a song that is the closest genre to both songs.
-          </div>
-        )}
         {matchedSong && genreInfo && (
-          <div style={{ textAlign: 'center' }}>
+          <div style={{ textAlign: 'center', marginTop: isMobile ? '20px' : '30px' }}>
             <div style={genreInfoStyle}>
               Most similar genre to {genreInfo.genre1} and {genreInfo.genre2} is {genreInfo.matchedGenre}
             </div>
@@ -365,17 +362,27 @@ function App() {
             )}
           </div>
         )}
-        <div style={{ textAlign: 'center', marginTop: '20px' }}>
-          {song1 && song2 && !matchedSong && (
-            <button
-              onClick={handleMatchSongs}
-              disabled={isLoading}
-              style={{ ...buttonStyle, maxWidth: '250px' }}
-            >
-              {isLoading ? 'Matching...' : 'Generate Song'}
-            </button>
-          )}
-        </div>
+      </div>
+      <div style={{ textAlign: 'center', marginTop: '20px' }}>
+        {!matchedSong && (
+          <div
+            style={{
+              color: colors.spotifyWhite,
+              fontSize: '1em',
+            }}
+          >
+            Select two songs to generate a song that is the closest genre to both songs.
+          </div>
+        )}
+        {song1 && song2 && !matchedSong && (
+          <button
+            onClick={handleMatchSongs}
+            disabled={isLoading}
+            style={{ ...buttonStyle, maxWidth: '250px', marginTop: '10px' }}
+          >
+            {isLoading ? 'Matching...' : 'Generate Song'}
+          </button>
+        )}
       </div>
     </div>
   );
