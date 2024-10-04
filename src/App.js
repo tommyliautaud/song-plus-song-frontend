@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useMediaQuery } from '@material-ui/core';
+import { useMediaQuery } from '@mui/material';
 import SearchWidget from './components/SearchWidget';
 import PlayButton from './components/PlayButton';
 import AboutPage from './components/AboutPage';
