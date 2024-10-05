@@ -350,35 +350,37 @@ function App() {
             )}
           </div>
         </div>
-        {matchedSong && genreInfo && (
-          <div style={{ textAlign: 'center', marginTop: isMobile ? '20px' : '30px' }}>
-            <div style={genreInfoStyle}>
-              Most similar genre to {genreInfo.genre1} and {genreInfo.genre2} is {genreInfo.matchedGenre}
-            </div>
-            {spotifyUrl && (
-              <div onClick={handleSpotifyClick} style={spotifyLinkStyle}>
-                Listen on Spotify
-              </div>
-            )}
-          </div>
-        )}
       </div>
-      <div style={{ textAlign: 'center', marginTop: '20px' }}>
-        {!matchedSong && (
-          <div
-            style={{
-              color: colors.spotifyWhite,
-              fontSize: '1em',
-            }}
-          >
-            Select two songs to generate a song that is the closest genre to both songs.
+      {!matchedSong && (
+        <div
+          style={{
+            textAlign: 'center',
+            marginTop: '20px',
+            color: colors.spotifyWhite,
+            fontSize: '1em',
+          }}
+        >
+          Select two songs to generate a song that is the closest genre to both songs.
+        </div>
+      )}
+      {matchedSong && genreInfo && (
+        <div style={{ textAlign: 'center', marginTop: '30px' }}>
+          <div style={genreInfoStyle}>
+            Most similar genre to {genreInfo.genre1} and {genreInfo.genre2} is {genreInfo.matchedGenre}
           </div>
-        )}
+          {spotifyUrl && (
+            <div onClick={handleSpotifyClick} style={spotifyLinkStyle}>
+              Listen on Spotify
+            </div>
+          )}
+        </div>
+      )}
+      <div style={{ textAlign: 'center', marginTop: '20px' }}>
         {song1 && song2 && !matchedSong && (
           <button
             onClick={handleMatchSongs}
             disabled={isLoading}
-            style={{ ...buttonStyle, maxWidth: '250px', marginTop: '10px' }}
+            style={{ ...buttonStyle, maxWidth: '250px' }}
           >
             {isLoading ? 'Matching...' : 'Generate Song'}
           </button>
