@@ -158,6 +158,7 @@ function App() {
     fontSize: '0.9em',
     width: '100%',
     maxWidth: '200px',
+    maxWidth: '250px',
   };
 
   const symbolStyle = {
@@ -192,7 +193,7 @@ function App() {
     color: colors.spotifyWhite,
     fontSize: '1em',
     marginTop: '30px',
-    padding: '15px',
+    padding: '10px',
     backgroundColor: colors.spotifyBlack,
     borderRadius: '8px',
     width: '100%',
@@ -264,11 +265,21 @@ function App() {
           About
         </button>
       </div>
-      <div
+      {isMobile && !matchedSong && (<div
+          style={{
+            textAlign: 'center',
+            marginTop: '20px',
+            color: colors.spotifyWhite,
+            fontSize: '1em',
+          }}
+        >
+          Select two songs to generate a song that is the closest genre to both songs.
+        </div>)}
+      <div id="outer-container"
         style={{
           display: 'flex',
-          flexDirection: isMobile ? 'column' : 'row',
-          alignItems: 'flex-start',
+          flexDirection: 'column',
+          alignItems: 'flex-center',
           flex: 1,
         }}
       >
@@ -348,6 +359,17 @@ function App() {
                 {isLoading ? 'Generating...' : 'Generate New Song'}
               </button>
             )}
+            <div style={{ textAlign: 'center', marginTop: '20px' }}>
+        {song1 && song2 && !matchedSong && isMobile && (
+          <button
+          onClick={handleMatchSongs}
+          disabled={isLoading}
+          style={buttonStyle}
+        >
+          {isLoading ? 'Matching...' : 'Generate Song'}
+        </button>
+        )}
+      </div>
           </div>
         </div>
         {matchedSong && genreInfo && (
@@ -362,8 +384,7 @@ function App() {
             )}
           </div>
         )}
-      </div>
-      {!matchedSong && (
+        {!matchedSong && !isMobile && (
         <div
           style={{
             textAlign: 'center',
@@ -375,8 +396,9 @@ function App() {
           Select two songs to generate a song that is the closest genre to both songs.
         </div>
       )}
+      </div>
       <div style={{ textAlign: 'center', marginTop: '20px' }}>
-        {song1 && song2 && !matchedSong && (
+        {song1 && song2 && !matchedSong && !isMobile && (
           <button
             onClick={handleMatchSongs}
             disabled={isLoading}
