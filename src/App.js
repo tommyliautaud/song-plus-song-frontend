@@ -349,7 +349,28 @@ function App() {
                 Select two songs to find a match
               </div>
             )}
-            {matchedSong && (
+            {matchedSong && genreInfo && isMobile && (
+          <div style={{ textAlign: 'center', marginTop: isMobile ? '20px' : '30px' }}>
+            <div style={genreInfoStyle}>
+              Most similar genre to {genreInfo.genre1} and {genreInfo.genre2} is {genreInfo.matchedGenre}
+            </div>
+            {spotifyUrl && (
+              <div onClick={handleSpotifyClick} style={spotifyLinkStyle}>
+                Listen on Spotify
+              </div>
+            )}
+          </div>
+        )}
+        {matchedSong && isMobile && (
+              <button
+                onClick={handleGenerateNew}
+                disabled={isLoading}
+                style={{ ...buttonStyle, marginTop: '10px' }}
+              >
+                {isLoading ? 'Generating...' : 'Generate New Song'}
+              </button>
+            )}
+            {matchedSong && !isMobile && (
               <button
                 onClick={handleGenerateNew}
                 disabled={isLoading}
@@ -371,7 +392,7 @@ function App() {
       </div>
           </div>
         </div>
-        {matchedSong && genreInfo && (
+        {matchedSong && genreInfo && !isMobile && (
           <div style={{ textAlign: 'center', marginTop: isMobile ? '20px' : '30px' }}>
             <div style={genreInfoStyle}>
               Most similar genre to {genreInfo.genre1} and {genreInfo.genre2} is {genreInfo.matchedGenre}
