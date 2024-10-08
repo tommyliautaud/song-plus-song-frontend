@@ -157,7 +157,6 @@ function App() {
     fontWeight: 'bold',
     fontSize: '0.9em',
     width: '100%',
-    maxWidth: '200px',
     maxWidth: '250px',
   };
 
