@@ -26,7 +26,7 @@ const AboutPage = () => {
       <div className="about-section">
         <h2 className="about-section-title">Is This Safe To Use?</h2>
         <p className="about-section-text">
-          Yes! Song Plus Song does not require any of the user's Spotify data nor does it require the user to have a Spotify account at all. The generated song provides a link to listen to the song in Spotify, but it does not actually use any of the user's data in doing so.
+          Yes! Song Plus Song does not require any of the user's Spotify data. The generated song provides a link to listen to the song in Spotify.
         </p>
       </div>
 
