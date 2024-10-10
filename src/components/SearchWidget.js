@@ -66,6 +66,7 @@ function SearchWidget({ onSongSelect, songNumber }) {
               />
               <div className="result-text-container">
                 <div className="result-text result-name">{truncateText(track.name, 30)}</div>
+                <div className="result-text result-album">{truncateText(track.album.name, 40)}</div> {/* Display album name */}
                 <div className="result-text result-artist">
                   {truncateText(track.artists.map(artist => artist.name).join(', '), 40)}
                 </div>

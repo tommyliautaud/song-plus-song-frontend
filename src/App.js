@@ -14,7 +14,7 @@ export const colors = {
 };
 
 const fontStyle = {
-  fontFamily: "'Circular Std', Arial, sans-serif",
+  fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif',
 };
 
 function App() {
@@ -96,56 +96,142 @@ function App() {
     }
   };
 
+  
+  // In your App component, update the renderSong function:
   const renderSong = (song, title, genre) => {
     if (!song) return null;
 
-    const imageUrl = song.album?.images?.[1]?.url || song.coverArt || 'placeholder-image-url.jpg';
+  const imageUrl = song.album?.images?.[1]?.url || song.coverArt || 'placeholder-image-url.jpg';
+  const spotifyUrl = song.external_urls?.spotify || song.url;
 
-    return (
-      <div
-        style={{
-          textAlign: 'center',
-          backgroundColor: colors.spotifyBlack,
-          padding: '15px',
-          borderRadius: '8px',
-          ...fontStyle,
-          width: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          height: '360px',
-          justifyContent: 'space-between',
+  const handleSongClick = () => {
+    if (spotifyUrl) {
+      window.open(spotifyUrl, '_blank', 'noopener,noreferrer');
+    } else {
+      alert('Spotify link is not available for this song.');
+    }
+  };
+
+  const truncatedTextStyle = {
+    width: '100%',
+    maxHeight: '3.6em',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    display: '-webkit-box',
+    WebkitLineClamp: 3,
+    WebkitBoxOrient: 'vertical',
+  };
+
+  const minLogoSize = 70; // Minimum width of the logo in pixels
+  const logoSize = Math.max(minLogoSize, 100); // Use 100px or minLogoSize, whichever is larger
+  const exclusionZone = logoSize / 4;
+
+  return (
+    <div
+      style={{
+        textAlign: 'center',
+        backgroundColor: colors.spotifyBlack,
+        padding: '15px',
+        borderRadius: '8px',
+        ...fontStyle,
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        height: '470px',
+        justifyContent: 'flex-start',
+        overflow: 'hidden', // Add this to prevent content from spilling out
+      }}
+    >
+      <div style={{ marginBottom: '8px', height: '20px' }}>
+        {genre && (
+          <div style={{ color: colors.spotifyGrey, fontSize: '0.9em' }}>Genre: {genre}</div>
+        )}
+      </div>
+      <h3 style={{ color: colors.spotifyWhite, marginBottom: '8px', fontWeight: 900, fontSize: '0.9em' }}>
+        {title}
+      </h3>
+      <div style={{
+        backgroundColor: colors.spotifyBlack,
+        padding: `${exclusionZone}px 0`, // Changed to only have vertical padding
+        marginBottom: '12px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%',
+      }}>
+        <img
+          src="Spotify_Full_Logo_RGB_Green.png"
+          alt="Spotify Logo"
+          style={{
+            width: `${logoSize}px`,
+            height: 'auto',
+          }}
+        />
+      </div>
+      <img
+        src={imageUrl}
+        alt={`${song.name} album cover`}
+        style={{ width: '150px', height: '150px', marginBottom: '12px', borderRadius: '4px' }}
+      />
+      <div 
+        onClick={handleSongClick}
+        style={{ 
+          ...truncatedTextStyle,
+          fontWeight: 'bold', 
+          color: colors.spotifyGreen,
+          fontSize: '0.9em', 
+          cursor: 'pointer',
+          textDecoration: 'underline',
+          marginBottom: '8px',
         }}
       >
-        <div style={{ height: '20px', marginBottom: '8px' }}>
-          {genre && (
-            <div style={{ color: colors.spotifyGrey, fontSize: '0.9em' }}>Genre: {genre}</div>
-          )}
-        </div>
-        <h3 style={{ color: colors.spotifyWhite, marginBottom: '8px', fontWeight: 900, fontSize: '0.9em' }}>
-          {title}
-        </h3>
-        <img
-          src={imageUrl}
-          alt={`${song.name} album cover`}
-          style={{ width: '150px', height: '150px', marginBottom: '12px', borderRadius: '4px' }}
-        />
-        <div style={{ fontWeight: 'bold', color: colors.spotifyWhite, fontSize: '0.9em', marginBottom: '8px' }}>
-          {song.name}
-        </div>
-        <div style={{ fontSize: '0.8em', color: colors.spotifyGrey, marginBottom: '12px' }}>
-          {song.artists.map((artist) => artist.name).join(', ')}
-        </div>
-        <div style={{ height: '32px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          {song.preview_url ? (
-            <PlayButton previewUrl={song.preview_url} />
-          ) : (
-            <span style={{ color: colors.spotifyGrey, fontSize: '0.8em' }}>No preview available</span>
-          )}
-        </div>
+        {song.name}
+        {song.explicit && (
+          <span style={{
+            marginLeft: '5px',
+            padding: '2px 4px',
+            backgroundColor: colors.spotifyGrey,
+            color: colors.spotifyBlack,
+            fontSize: '0.7em',
+            fontWeight: 'bold',
+            borderRadius: '2px',
+          }}>
+            E
+          </span>
+        )}
       </div>
-    );
-  };
+      <div style={{ 
+        ...truncatedTextStyle,
+        fontSize: '0.8em', 
+        color: colors.spotifyGrey, 
+        marginBottom: '8px',
+      }}>
+        {song.album?.name || 'Unknown Album'}
+      </div>
+      <div style={{ 
+        ...truncatedTextStyle,
+        fontSize: '0.8em', 
+        color: colors.spotifyGrey, 
+        marginBottom: '20px',
+      }}>
+        {song.artists.map((artist) => artist.name).join(', ')}
+      </div>
+      <div style={{ 
+        height: '32px', 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center',
+      }}>
+        {song.preview_url ? (
+          <PlayButton previewUrl={song.preview_url} />
+        ) : (
+          <span style={{ color: colors.spotifyGrey, fontSize: '0.8em' }}>No preview available</span>
+        )}
+      </div>
+    </div>
+  );
+};
 
   const buttonStyle = {
     backgroundColor: colors.spotifyGreen,
@@ -168,7 +254,7 @@ function App() {
     justifyContent: 'center',
     width: isMobile ? '100%' : '60px',
     height: isMobile ? '60px' : '60px',
-    marginTop: isMobile ? '20px' : '170px',
+    marginTop: isMobile ? '5px' : '256px', // Increased from 180px to 210px
   };
 
   const columnStyle = {
@@ -176,7 +262,7 @@ function App() {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    marginBottom: isMobile ? '30px' : '0',
+    marginBottom: isMobile ? '40px' : '20px', // Increased from 30px and 0
   };
 
   const headerStyle = {
@@ -244,6 +330,7 @@ function App() {
         padding: '20px',
         backgroundColor: colors.spotifyBlack,
         minHeight: '100vh',
+        height: '100%', // Add this
         color: colors.spotifyWhite,
         ...fontStyle,
         display: 'flex',
@@ -259,7 +346,7 @@ function App() {
           flexDirection: isMobile ? 'column' : 'row',
         }}
       >
-        <h1 style={{ color: colors.spotifyGreen, marginBottom: isMobile ? '20px' : '0' }}>Song Plus Song</h1>
+        <h1 style={{ color: colors.spotifyWhite, marginBottom: isMobile ? '20px' : '0' }}>Song Plus Song</h1>
         <button onClick={handleAboutClick} style={buttonStyle}>
           About
         </button>
@@ -303,11 +390,11 @@ function App() {
               <button
                 onClick={() => handleBack(1)}
                 disabled={isLoading}
-                style={{ ...buttonStyle, marginTop: '10px' }}
+                style={{ ...buttonStyle, marginTop: '20px' }} // Increased from 10px
               >
                 Change Song
               </button>
-            )}
+)}
           </div>
           {(song1 || song2) && <div style={symbolStyle}>+</div>}
           <div style={columnStyle}>
@@ -321,7 +408,7 @@ function App() {
               <button
                 onClick={() => handleBack(2)}
                 disabled={isLoading}
-                style={{ ...buttonStyle, marginTop: '10px' }}
+                style={{ ...buttonStyle, marginTop: '20px' }}
               >
                 Change Song
               </button>
@@ -374,22 +461,22 @@ function App() {
               <button
                 onClick={handleGenerateNew}
                 disabled={isLoading}
-                style={{ ...buttonStyle, marginTop: '10px' }}
+                style={{ ...buttonStyle, marginTop: '20px' }}
               >
                 {isLoading ? 'Generating...' : 'Generate New Song'}
               </button>
             )}
-            <div style={{ textAlign: 'center', marginTop: '20px' }}>
-        {song1 && song2 && !matchedSong && isMobile && (
-          <button
-          onClick={handleMatchSongs}
-          disabled={isLoading}
-          style={buttonStyle}
-        >
-          {isLoading ? 'Matching...' : 'Generate Song'}
-        </button>
-        )}
-      </div>
+            <div style={{ textAlign: 'center', marginTop: '30px' }}> {/* Increased from 20px */}
+              {song1 && song2 && !matchedSong && isMobile && (
+              <button
+                onClick={handleMatchSongs}
+                disabled={isLoading}
+                style={buttonStyle}
+              >
+              {isLoading ? 'Matching...' : 'Generate Song'}
+              </button>
+              )}
+            </div>
           </div>
         </div>
         {matchedSong && genreInfo && !isMobile && (
@@ -417,15 +504,15 @@ function App() {
         </div>
       )}
       </div>
-      <div style={{ textAlign: 'center', marginTop: '20px' }}>
+      <div style={{ textAlign: 'center', marginTop: '30px' }}> {/* Increased from 20px */}
         {song1 && song2 && !matchedSong && !isMobile && (
-          <button
-            onClick={handleMatchSongs}
-            disabled={isLoading}
-            style={{ ...buttonStyle, maxWidth: '250px' }}
-          >
-            {isLoading ? 'Matching...' : 'Generate Song'}
-          </button>
+        <button
+          onClick={handleMatchSongs}
+          disabled={isLoading}
+          style={{ ...buttonStyle, maxWidth: '250px' }}
+        >
+          {isLoading ? 'Matching...' : 'Generate Song'}
+        </button>
         )}
       </div>
     </div>
