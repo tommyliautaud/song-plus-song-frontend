@@ -19,7 +19,7 @@ const AboutPage = () => {
           I used React for the frontend development as well as Node and Express for the backend development. The website itself uses Spotify's Web API to fetch the songs alongside their metadata as well as the Spotify Playback SDK to offer in browser playability for the song snippets.
         </p>
         <p className="about-section-text">
-          Additionally, in order to calculate the most similar genre to the input genres, I used the genre information provided by <a href="https://everynoise.com" target="_blank" rel="noopener noreferrer" className="about-link">everynoise.com</a>. EveryNoise was made by former Spotify employee Glenn McDonald. Without this site he built, this effort would not have been made possible and I commend him for the amazing work he did to bring EveryNoise to life.
+          Additionally, in order to calculate the most similar genre to the input genres, I used the genre information provided by <a href="https://everynoise.com" target="_blank" rel="noopener noreferrer" className="about-link">everynoise.com</a>. EveryNoise was made by Glenn McDonald. Without this site he built, this effort would not have been made possible and I commend him for the amazing work he did to bring EveryNoise to life.
         </p>
       </div>
 
