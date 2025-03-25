@@ -76,7 +76,7 @@
   color: #B3B3B3;
 }
 
-/* Media queries for responsive search widget */
+
 
 @media (max-width: 768px) {
   .search-input {

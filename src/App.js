@@ -97,7 +97,6 @@ function App() {
   };
 
   
-  // In your App component, update the renderSong function:
   const renderSong = (song, title, genre) => {
     if (!song) return null;
 
@@ -122,8 +121,8 @@ function App() {
     WebkitBoxOrient: 'vertical',
   };
 
-  const minLogoSize = 70; // Minimum width of the logo in pixels
-  const logoSize = Math.max(minLogoSize, 100); // Use 100px or minLogoSize, whichever is larger
+  const minLogoSize = 70; 
+  const logoSize = Math.max(minLogoSize, 100); 
   const exclusionZone = logoSize / 4;
 
   return (
@@ -140,7 +139,7 @@ function App() {
         alignItems: 'center',
         height: '470px',
         justifyContent: 'flex-start',
-        overflow: 'hidden', // Add this to prevent content from spilling out
+        overflow: 'hidden', 
       }}
     >
       <div style={{ marginBottom: '8px', height: '20px' }}>
@@ -153,7 +152,7 @@ function App() {
       </h3>
       <div style={{
         backgroundColor: colors.spotifyBlack,
-        padding: `${exclusionZone}px 0`, // Changed to only have vertical padding
+        padding: `${exclusionZone}px 0`, 
         marginBottom: '12px',
         display: 'flex',
         justifyContent: 'center',
@@ -254,7 +253,7 @@ function App() {
     justifyContent: 'center',
     width: isMobile ? '100%' : '60px',
     height: isMobile ? '60px' : '60px',
-    marginTop: isMobile ? '5px' : '256px', // Increased from 180px to 210px
+    marginTop: isMobile ? '5px' : '256px', 
   };
 
   const columnStyle = {
@@ -262,7 +261,7 @@ function App() {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    marginBottom: isMobile ? '40px' : '20px', // Increased from 30px and 0
+    marginBottom: isMobile ? '40px' : '20px', 
   };
 
   const headerStyle = {
@@ -330,7 +329,7 @@ function App() {
         padding: '20px',
         backgroundColor: colors.spotifyBlack,
         minHeight: '100vh',
-        height: '100%', // Add this
+        height: '100%', 
         color: colors.spotifyWhite,
         ...fontStyle,
         display: 'flex',
@@ -390,7 +389,7 @@ function App() {
               <button
                 onClick={() => handleBack(1)}
                 disabled={isLoading}
-                style={{ ...buttonStyle, marginTop: '20px' }} // Increased from 10px
+                style={{ ...buttonStyle, marginTop: '20px' }} 
               >
                 Change Song
               </button>
@@ -466,7 +465,7 @@ function App() {
                 {isLoading ? 'Generating...' : 'Generate New Song'}
               </button>
             )}
-            <div style={{ textAlign: 'center', marginTop: '30px' }}> {/* Increased from 20px */}
+            <div style={{ textAlign: 'center', marginTop: '30px' }}> {}
               {song1 && song2 && !matchedSong && isMobile && (
               <button
                 onClick={handleMatchSongs}
@@ -504,7 +503,7 @@ function App() {
         </div>
       )}
       </div>
-      <div style={{ textAlign: 'center', marginTop: '30px' }}> {/* Increased from 20px */}
+      <div style={{ textAlign: 'center', marginTop: '30px' }}> {}
         {song1 && song2 && !matchedSong && !isMobile && (
         <button
           onClick={handleMatchSongs}
