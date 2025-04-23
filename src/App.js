@@ -438,7 +438,7 @@ function App() {
             {matchedSong && genreInfo && isMobile && (
           <div style={{ textAlign: 'center', marginTop: isMobile ? '20px' : '30px' }}>
             <div style={genreInfoStyle}>
-              Most similar genre to {genreInfo.genre1} and {genreInfo.genre2} is {genreInfo.matchedGenre}
+              Most similar genre to {genreInfo.genre1} and {genreInfo.genre2} is {genreInfo.matchedGenre} with similarity score {genreInfo.similarityScore}
             </div>
             {spotifyUrl && (
               <div onClick={handleSpotifyClick} style={spotifyLinkStyle}>
@@ -481,7 +481,7 @@ function App() {
         {matchedSong && genreInfo && !isMobile && (
           <div style={{ textAlign: 'center', marginTop: isMobile ? '20px' : '30px' }}>
             <div style={genreInfoStyle}>
-              Most similar genre to {genreInfo.genre1} and {genreInfo.genre2} is {genreInfo.matchedGenre}
+             Most similar genre to {genreInfo.genre1} and {genreInfo.genre2} is {genreInfo.matchedGenre} with similarity score {genreInfo.similarityScore}
             </div>
             {spotifyUrl && (
               <div onClick={handleSpotifyClick} style={spotifyLinkStyle}>
