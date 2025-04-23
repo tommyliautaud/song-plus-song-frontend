@@ -16,24 +16,27 @@ const AboutPage = () => {
       <div className="about-section">
         <h2 className="about-section-title">How This Works</h2>
         <p className="about-section-text">
-          I used React for the frontend development as well as Node and Express for the backend development. The website itself uses Spotify's Web API to fetch the songs alongside their metadata as well as the Spotify Playback SDK to offer in browser playability for the song snippets.
+          I used React for the frontend development as well as Node and Express for the backend. The website uses Spotify's Web API to fetch song data and metadata, and integrates the Spotify Playback SDK to allow in-browser playback of song previews.
         </p>
         <p className="about-section-text">
-          Additionally, in order to calculate the most similar genre to the input genres, I used the genre information provided by <a href="https://everynoise.com" target="_blank" rel="noopener noreferrer" className="about-link">everynoise.com</a>. EveryNoise was made by Glenn McDonald. Without this site he built, this effort would not have been made possible and I commend him for the amazing work he did to bring EveryNoise to life.
+          To calculate the most musically compatible genre between two input songs, I use genre data sourced from <a href="https://everynoise.com" target="_blank" rel="noopener noreferrer" className="about-link">EveryNoise</a>, a massive genre taxonomy created by Glenn McDonald. Every genre is embedded into vector space using OpenAI's text embedding models, which allows Song Plus Song to semantically compare and average genres in a mathematically meaningful way. This makes the recommendation engine more dynamic, flexible, and capable of finding genre connections even when the input songs seem unrelated.
+        </p>
+        <p className="about-section-text">
+          The result is a new song pulled from Spotify whose genre is the closest match to both of your inputs — calculated using real natural language processing techniques.
         </p>
       </div>
 
       <div className="about-section">
         <h2 className="about-section-title">Is This Safe To Use?</h2>
         <p className="about-section-text">
-          Yes! Song Plus Song does not require any of the user's Spotify data. The generated song provides a link to listen to the song in Spotify.
+          Yes! Song Plus Song does not require any of your Spotify account data. The generated song simply provides a direct link to listen to it on Spotify.
         </p>
       </div>
 
       <div className="about-section">
         <h2 className="about-section-title">Contact</h2>
         <p className="about-section-text">
-          Questions? Comments? Concerns? Email me at @thomasjohnliautaud@gmail.com.
+          Questions? Comments? Suggestions? Feel free to email me at thomasjohnliautaud@gmail.com.
         </p>
       </div>
     </div>
